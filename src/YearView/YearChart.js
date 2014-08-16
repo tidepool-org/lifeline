@@ -118,7 +118,7 @@ module.exports = {
         viewBox: '0 0 ' + el.offsetWidth + ' ' + el.offsetHeight
       })
       .chart('Year')
-      .location(options.domain);
+      .location(options.location);
     return chart;
   }
 };

@@ -6,7 +6,7 @@ var YearTitle = React.createClass({
   render: function() {
     return (
       <div className="YearTitle">
-        {this.props.command.domain}
+        {this.props.zoom.location}
       </div>
     );
   }
