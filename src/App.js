@@ -31,7 +31,6 @@ var App = React.createClass({
     var Title = zooming.getTitleForLevel(this.state.zoom.level);
 
     return (
-      /* jshint ignore:start */
       <div className="App">
         <div className="App-rows">
           <div className="App-title">
@@ -54,7 +53,6 @@ var App = React.createClass({
           </a>
         </div>
       </div>
-      /* jshint ignore:end */
     );
   }
 });

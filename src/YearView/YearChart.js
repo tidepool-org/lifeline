@@ -8,8 +8,8 @@ d3.chart('Year', {
   initialize: function() {
     this.w = this.base.attr('width');
     this.h = this.base.attr('height');
-    var emitter = new EventEmitter();
-    this.layer('boxes', this.base.append('g'), {
+    this.emitter = new EventEmitter();
+    this.layer('month-boxes', this.base.append('g'), {
       dataBind: function() {
         var chart = this.chart();
         return this.selectAll('rect').data(chart.months());
@@ -47,7 +47,7 @@ d3.chart('Year', {
             'class': 'Chart-rect--invisible'
           })
           .on('click', function() {
-            emitter.emit('zoom', {
+            chart.emitter.emit('zoom', {
               type: 'month',
               domain: d3.select(this).datum().format('YYYY-MM')
             });

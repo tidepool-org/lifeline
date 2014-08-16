@@ -1,6 +1,5 @@
 /* global rm, cp, ls*/
 require('shelljs/global');
-var fs = require('fs');
 
 var ghPagesDir = '../lifeline-gh-pages';
 

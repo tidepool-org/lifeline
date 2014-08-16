@@ -1,5 +1,6 @@
 /* global rm, mkdir, exec, ls*/
 require('shelljs/global');
+var fs = require('fs');
 
 console.log('Cleaning output directory "dist/"...');
 rm('-rf', 'dist');
