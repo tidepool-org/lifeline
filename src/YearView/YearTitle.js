@@ -5,9 +5,11 @@ var React = require('react');
 var YearTitle = React.createClass({
   render: function() {
     return (
+    /* jshint ignore:start */
       <div className="YearTitle">
-        {this.props.command.type + this.props.command.domain}
+        {this.props.command.domain}
       </div>
+    /* jshint ignore:end */
     );
   }
 });

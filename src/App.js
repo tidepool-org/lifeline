@@ -16,20 +16,23 @@ var App = React.createClass({
   componentDidMount: function() {
     var el = this.refs.chart.getDOMNode();
     this.chart = YearChart.create(el, {
-      width: 100,
-      height: 100,
+      width: el.offsetWidth,
+      height: el.offsetHeight,
       domain: command.domain
     });
+    this.chart.draw();
   },
 
   render: function() {
     var title = YearTitle({command: command});
 
     return (
+      /* jshint ignore:start */
       <div className="App">
         <div className="App-title">{title}</div>
         <div className="App-chart" ref="chart"></div>
       </div>
+      /* jshint ignore:end */
     );
   }
 });
