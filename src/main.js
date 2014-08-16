@@ -5,4 +5,7 @@ var React = require('react');
 
 var App = require('./app');
 
-window.app = React.renderComponent(App(), document.body);
+// Let webpack apply styles before we start anything
+setTimeout(function() {
+  window.app = React.renderComponent(App(), document.body)
+});
