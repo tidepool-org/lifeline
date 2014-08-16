@@ -56,7 +56,7 @@ d3.chart('Year', {
       }
     });
   },
-  domain: function(year) {
+  location: function(year) {
     var _months = [];
     for (var i = 0; i < 12; ++i) {
       _months.push(moment(year + ' ' + (i + 1), 'YYYY M'));
@@ -79,7 +79,7 @@ module.exports = {
         viewBox: '0 0 ' + el.offsetWidth + ' ' + el.offsetHeight
       })
       .chart('Year')
-      .domain(options.domain);
+      .location(options.location);
     return chart;
   }
 };
