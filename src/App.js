@@ -2,35 +2,41 @@
 
 var React = require('react');
 
-var YearTitle = require('./YearView/YearTitle');
-var YearChart = require('./YearView/YearChart');
+var zooming = require('./zooming');
 
 require('./App.less');
 
-var command = {
-  type: 'year',
-  domain: '2014'
-};
-
 var App = React.createClass({
+  getInitialState: function() {
+    return {
+      zoom: {
+        level: 'year',
+        location: '2014'
+      }
+    };
+  },
+
   componentDidMount: function() {
     var el = this.refs.chart.getDOMNode();
-    this.chart = YearChart.create(el, {
+    var Chart = zooming.getChartForLevel(this.state.zoom.level);
+    this.chart = Chart.create(el, {
       width: el.offsetWidth,
       height: el.offsetHeight,
-      domain: command.domain
+      location: this.state.zoom.location
     });
     this.chart.draw();
   },
 
   render: function() {
-    var title = YearTitle({command: command});
+    var Title = zooming.getTitleForLevel(this.state.zoom.level);
 
     return (
       /* jshint ignore:start */
       <div className="App">
         <div className="App-rows">
-          <div className="App-title">{title}</div>
+          <div className="App-title">
+            <Title zoom={this.state.zoom} />
+          </div>
           <a href="#" className="App-zoom App-zoom--horizontal">
             <div className="App-zoomIcon">&#8854;</div>
           </a>
