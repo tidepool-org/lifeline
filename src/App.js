@@ -15,17 +15,19 @@ var command = {
 var App = React.createClass({
   componentDidMount: function() {
     var el = this.refs.chart.getDOMNode();
-    // this.chart = YearChart.create(el, {
-    //   width: el.offsetWidth,
-    //   height: el.offsetHeight,
-    //   domain: command.domain
-    // });
+    this.chart = YearChart.create(el, {
+      width: el.offsetWidth,
+      height: el.offsetHeight,
+      domain: command.domain
+    });
+    this.chart.draw();
   },
 
   render: function() {
     var title = YearTitle({command: command});
 
     return (
+      /* jshint ignore:start */
       <div className="App">
         <div className="App-rows">
           <div className="App-title">{title}</div>
@@ -46,6 +48,7 @@ var App = React.createClass({
           </a>
         </div>
       </div>
+      /* jshint ignore:end */
     );
   }
 });
