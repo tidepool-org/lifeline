@@ -27,7 +27,6 @@ var App = React.createClass({
     var title = YearTitle({command: command});
 
     return (
-      /* jshint ignore:start */
       <div className="App">
         <div className="App-rows">
           <div className="App-title">{title}</div>
@@ -48,7 +47,6 @@ var App = React.createClass({
           </a>
         </div>
       </div>
-      /* jshint ignore:end */
     );
   }
 });
