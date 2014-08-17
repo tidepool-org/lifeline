@@ -3,7 +3,8 @@ var EventEmitter = require('events').EventEmitter;
 
 var d3 = window.d3;
 
-var MonthChartInner = require('../CommonView/MonthChartInner');
+var MonthData = require('./MonthData');
+var MonthBarTIR = require('./MonthBarTIR');
 
 d3.chart('Month', {
   initialize: function() {
@@ -27,7 +28,7 @@ d3.chart('Month', {
             'class': 'Chart-month',
             'transform': 'translate(' + margin + ',' + margin + ')'
           });
-          var month = MonthChartInner.create(this.node(), {
+          var month = MonthBarTIR.create(this.node(), {
             location: chart.month(),
             width: chart.w,
             height: chart.h,
@@ -37,7 +38,7 @@ d3.chart('Month', {
               inner: 10
             }
           });
-          month.draw();
+          month.draw(chart.dData);
         }
       }
     });
@@ -45,6 +46,10 @@ d3.chart('Month', {
   location: function(location) {
     this.month = function() { return location; };
     return this;
+  },
+  transform: function(cube) {
+    this.dData = MonthData(cube);
+    return this.dData;
   },
   remove: function() {
     this.base.remove();
