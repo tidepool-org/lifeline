@@ -21,6 +21,7 @@ ns.fetchForZoom = function(zoom, cb) {
     if (err) {
       throw err;
     }
+
     var range = zooming.range(zoom);
     cube.filterBy('deviceTime', range);
     return cb && cb(null, cube);
@@ -36,7 +37,8 @@ ns._fetchForYear = function(year, cb) {
 
   var url = this._urls[year];
   if (!url) {
-    return cb(null, null);
+    var cube = this._createDataCube([]);
+    return cb(null, cube);
   }
 
   var self = this;
