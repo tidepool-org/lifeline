@@ -6,9 +6,13 @@ d3.chart('MonthInner').extend('YearMedianHeat', {
   initialize: function() {
     this.layer('MonthInner-data').on('enter', function() {
 
-      // var heat = d3.scale.linear()
-      return this.style({
-        // 'fill-opacity': '0.0'
+      var heat = d3.scale.linear()
+        .domain(d3.extent(this.data(), function(d) { return d.value; }))
+        .range(['white', 'green'])
+        .interpolate(d3.interpolateHcl);
+
+      return this.attr({
+        fill: function(d) { return heat(d.value); }
       });
     });
   }

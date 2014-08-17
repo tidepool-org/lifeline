@@ -130,6 +130,8 @@ d3.chart('MonthInner', {
     return this;
   },
   transform: function(data) {
+    // TODO: this should be moved to YearData
+    // filter down to month before passing data to inner month chart
     return _.filter(data, function(d) {
       return d.key.indexOf(this.l) !== -1;
     }, this);
