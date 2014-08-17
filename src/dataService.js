@@ -96,6 +96,20 @@ ns._createDataCube = function(rawData) {
       deviceTimeDimension.filterAll();
       typeDimension.filterAll();
       return this;
+    },
+
+    groupBy: function(dimension, value) {
+      var group;
+      if (dimension === 'deviceTime') {
+        deviceTimeDimension.group(value);
+      }
+      else if (dimension === 'type') {
+        typeDimension.group(value);
+      }
+      else {
+        throw new Error('Can\'t group by dimension "' + dimension + '"');
+      }
+      return group;
     }
   };
 };
