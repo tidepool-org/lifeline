@@ -1,0 +1,67 @@
+// Credits to:
+// https://github.com/jh3y/-cs-spinner
+
+//(cs)spinner base variables
+@Spinner-height: 80px;
+@Spinner-width: 80px;
+@Spinner-borderWidth: 8px;
+@Spinner-overlayColor: #999;
+@Spinner-baseColor: #555;
+
+/* (cs)spinner base styling */
+.Spinner {
+  position: relative;
+}
+.Spinner:before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: @Spinner-overlayColor;
+  opacity: 0.6;
+}
+.Spinner:after {
+  z-index: 2;
+  content: "";
+  height: @Spinner-height;
+  width: @Spinner-width;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: (-@Spinner-width / 2) 0 0 (-@Spinner-width / 2);
+  transition: all .75s ease 0s;
+  border-radius: 100%;
+  border-top: @Spinner-borderWidth solid @Spinner-baseColor;
+  animation: standard .75s infinite linear;
+  transform-origin: center;
+}
+.Spinner--noOverlay:before {
+  content: none;
+  display: none;
+}
+
+/* (cs)spinner standard rotation animation used for duo, double-up etc. */
+@keyframes standard {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* (cs)spinner ringed spinner.
+a spinner with a static ring and no overlay.*/
+@Spinner-ringBeamColor: #668ED4;
+@Spinner-ringColor: #AFC5E2;
+
+.Spinner--ringed:after {
+	border-right: @Spinner-borderWidth solid @Spinner-ringBeamColor;
+	border-top: @Spinner-borderWidth solid @Spinner-ringColor;
+	border-left: @Spinner-borderWidth solid @Spinner-ringColor;
+	border-bottom: @Spinner-borderWidth solid @Spinner-ringColor;
+	opacity: 1;
+}
