@@ -3,6 +3,7 @@
 var React = require('react');
 
 var zooming = require('./zooming');
+var dataService = window.dataService = require('./dataService');
 
 require('./App.less');
 
@@ -25,7 +26,7 @@ var App = React.createClass({
     this.createChart();
   },
 
-  createChart: function() {
+  createChart: function(cb) {
     var el = this.refs.chart.getDOMNode();
     var Chart = zooming.getChart(this.state.zoom);
     this.chart = Chart.create(el, {
@@ -35,6 +36,15 @@ var App = React.createClass({
     });
     this.chart.emitter.on('zoom', this.handleZoom);
     this.chart.draw();
+
+    var self = this;
+    dataService.fetchForZoom(this.state.zoom, function(err, dataCube) {
+      if (err) {
+        throw err;
+      }
+      self.chart.draw(dataCube);
+      return cb && cb();
+    });
   },
 
   removeChart: function() {
@@ -43,9 +53,18 @@ var App = React.createClass({
   },
 
   render: function() {
+    var self = this;
     var Title = zooming.getTitle(this.state.zoom);
     var previousPageZoom = zooming.previousPage(this.state.zoom);
+    var handleClickPreviousPage = function(e) {
+      e.preventDefault();
+      return self.handleZoom(previousPageZoom);
+    };
     var nextPageZoom = zooming.nextPage(this.state.zoom);
+    var handleClickNextPage = function(e) {
+      e.preventDefault();
+      return self.handleZoom(nextPageZoom);
+    };
 
     return (
       <div className="App">
@@ -56,12 +75,12 @@ var App = React.createClass({
           {this.renderZoomOut()}
           <div className="App-columns">
             <a href="#" className="App-zoom App-zoom--vertical"
-              onClick={this.handleZoom.bind(this, previousPageZoom)}>
+              onClick={handleClickPreviousPage}>
               <div className="App-zoomIcon">&#9664;</div>
             </a>
             <div className="App-chart" ref="chart"></div>
             <a href="#" className="App-zoom App-zoom--vertical"
-              onClick={this.handleZoom.bind(this, nextPageZoom)}>
+              onClick={handleClickNextPage}>
               <div className="App-zoomIcon">&#9654;</div>
             </a>
           </div>
@@ -81,8 +100,11 @@ var App = React.createClass({
     }
 
     var newZoom = zooming.zoomOut(this.state.zoom);
-    var handleClick = this.handleZoom.bind(this, newZoom);
-
+    var self = this;
+    var handleClick = function(e) {
+      e.preventDefault();
+      self.handleZoom(newZoom);
+    };
     return (
       <a href="#" className="App-zoom App-zoom--horizontal"
         onClick={handleClick}>
@@ -101,7 +123,11 @@ var App = React.createClass({
     }
 
     var newZoom = zooming.zoomIn(this.state.zoom);
-    var handleClick = this.handleZoom.bind(this, newZoom);
+    var self = this;
+    var handleClick = function(e) {
+      e.preventDefault();
+      self.handleZoom(newZoom);
+    };
 
     return (
       <a href="#" className="App-zoom App-zoom--horizontal"
