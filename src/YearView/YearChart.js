@@ -20,7 +20,7 @@ d3.chart('Year', {
       return function() { return this.selectAll(el).data(chart.months()); };
     };
 
-    this.layer('month-containers', this.base.append('g').attr('id', 'month-containers'), {
+    this.layer('Month', this.base.append('g').attr('class', 'Month'), {
       dataBind: monthData('g'),
       insert: function() {
         return this.append('g');

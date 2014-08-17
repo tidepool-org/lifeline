@@ -11,7 +11,7 @@ d3.chart('MonthInner', {
     var dayData = function(el) {
       return function() { return this.selectAll(el).data(chart.days()); };
     };
-    this.layer('day-containers', this.base.append('g').attr('id', 'day-containers'), {
+    this.layer('MonthInner', this.base.append('g').attr('class', 'MonthInner'), {
       dataBind: dayData('rect'),
       insert: function() {
         return this.append('rect');

@@ -14,7 +14,7 @@ d3.chart('Month', {
     var chart = this;
     var margin = 10;
 
-    this.layer('month-container', this.base.append('g').attr('id', 'month-container'), {
+    this.layer('Month', this.base.append('g').attr('class', 'Month'), {
       dataBind: function() {
         return this.selectAll('g').data([chart.month()]);
       },
