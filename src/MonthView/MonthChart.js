@@ -38,6 +38,9 @@ d3.chart('Month', {
   location: function(location) {
     if (!arguments.length) { return location; }
     return this;
+  },
+  remove: function() {
+    this.base.remove();
   }
 });
 

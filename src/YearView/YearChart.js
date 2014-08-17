@@ -115,6 +115,9 @@ d3.chart('Year', {
     }
     this.months = function() { return _months; };
     return this;
+  },
+  remove: function() {
+    this.base.remove();
   }
 });
 
