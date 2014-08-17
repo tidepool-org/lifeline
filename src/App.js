@@ -67,17 +67,19 @@ var App = React.createClass({
 
     return (
       <div className="App">
-        <div className="App-rows">
-          <div className="App-title">
-            <Title zoom={this.state.zoom} />
-          </div>
+        <div className="App-verticalAlign">
           {this.renderZoomOut()}
-          <div className="App-columns">
+          <div className="App-middleHorizontalAlign">
             <a href="#" className="App-zoom App-zoom--vertical"
               onClick={handleClickPreviousPage}>
               <div className="App-zoomIcon">&#9664;</div>
             </a>
-            <div className="App-chart" ref="chart"></div>
+            <div className="App-middleVerticalAlign">
+              <div className="App-title">
+                <Title zoom={this.state.zoom} />
+              </div>
+              <div className="App-chart" ref="chart"></div>
+            </div>
             <a href="#" className="App-zoom App-zoom--vertical"
               onClick={handleClickNextPage}>
               <div className="App-zoomIcon">&#9654;</div>

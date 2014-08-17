@@ -27,14 +27,28 @@ a {
 @App-zoomButtonSize: 40px;
 
 .App {
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-.App-rows {
+.App-verticalAlign {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.App-middleHorizontalAlign {
+  display: flex;
+  flex-grow: 1;
+}
+
+.App-middleVerticalAlign {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .App-title {
@@ -42,11 +56,6 @@ a {
   font-size: 20px;
   height: 30px;
   line-height: 30px;
-}
-
-.App-columns {
-  display: flex;
-  flex-grow: 1;
 }
 
 .App-chart {
