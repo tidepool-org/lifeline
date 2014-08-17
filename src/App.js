@@ -1,9 +1,12 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var _ = require('lodash');
 
 var zooming = require('./zooming');
 var dataService = window.dataService = require('./dataService');
+
+var Spinner = require('./Spinner');
 
 require('./App.less');
 
@@ -13,7 +16,8 @@ var App = React.createClass({
       zoom: {
         level: 'year',
         location: '2014'
-      }
+      },
+      loading: false
     };
   },
 
@@ -21,9 +25,11 @@ var App = React.createClass({
     this.createChart();
   },
 
-  componentDidUpdate: function() {
-    this.removeChart();
-    this.createChart();
+  componentDidUpdate: function(prevProps, prevState) {
+    if (!_.isEqual(this.state.zoom, prevState.zoom)) {
+      this.removeChart();
+      this.createChart();
+    }
   },
 
   createChart: function(cb) {
@@ -37,11 +43,13 @@ var App = React.createClass({
     this.chart.emitter.on('zoom', this.handleZoom);
 
     var self = this;
+    this.setState({loading: true});
     dataService.fetchForZoom(this.state.zoom, function(err, dataCube) {
       if (err) {
         throw err;
       }
       self.chart.draw(dataCube);
+      self.setState({loading: false});
       return cb && cb();
     });
   },
@@ -67,6 +75,7 @@ var App = React.createClass({
 
     return (
       <div className="App">
+        {this.renderSpinner()}
         <div className="App-verticalAlign">
           {this.renderZoomOut()}
           <div className="App-middleHorizontalAlign">
@@ -89,6 +98,13 @@ var App = React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderSpinner: function() {
+    if (!this.state.loading) {
+      return null;
+    }
+    return <div className="App-spinnerLayer"><Spinner /></div>;
   },
 
   renderZoomOut: function() {
