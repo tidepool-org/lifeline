@@ -65,7 +65,14 @@ d3.chart('Year', {
           // there maybe should kinda be a better way to do nested charts in d3.chart
           for (var i = 0; i < this.size(); ++i) {
             var month = MonthChartInner.create(this[0][i], {
-              location: d3.select(this[0][i]).datum().format('YYYY-MM')
+              location: d3.select(this[0][i]).datum().format('YYYY-MM'),
+              width: boxWidth,
+              height: boxHeight,
+              margins: {
+                horizontal: margin,
+                vertical: margin,
+                inner: 2
+              }
             });
             month.draw(); 
           }

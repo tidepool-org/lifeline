@@ -28,7 +28,14 @@ d3.chart('Month', {
             'transform': 'translate(' + margin + ',' + margin + ')'
           });
           var month = MonthChartInner.create(this.node(), {
-            location: chart.month()
+            location: chart.month(),
+            width: chart.w,
+            height: chart.h,
+            margins: {
+              horizontal: 30,
+              vertical: 20,
+              inner: 10
+            }
           });
           month.draw();
         }
