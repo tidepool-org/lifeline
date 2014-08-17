@@ -4,6 +4,8 @@ var EventEmitter = require('events').EventEmitter;
 var d3 = window.d3;
 var moment = require('moment');
 
+var MonthChartInner = require('../MonthView/MonthChartInner');
+
 d3.chart('Year', {
   initialize: function() {
     this.w = this.base.attr('width');
@@ -14,12 +16,14 @@ d3.chart('Year', {
     var margin = 10;
     var boxWidth = (this.w - margin * 7)/6, boxHeight = (this.h - margin * 3)/2;
 
-    this.layer('month-boxes', this.base.append('g').attr('id', 'month-boxes'), {
-      dataBind: function() {
-        return this.selectAll('rect').data(chart.months());
-      },
+    var monthData = function(el) {
+      return function() { return this.selectAll(el).data(chart.months()); };
+    };
+
+    this.layer('month-containers', this.base.append('g').attr('id', 'month-containers'), {
+      dataBind: monthData('g'),
       insert: function() {
-        return this.append('rect');
+        return this.append('g');
       },
       events: {
         enter: function() {
@@ -39,28 +43,37 @@ d3.chart('Year', {
               return margin;
             }
           };
+          // var location = this.datum().format('YYYY-MM');
           this.attr({
-            width: boxWidth,
-            height: boxHeight,
-            x: xPosition,
-            y: yPosition,
-            fill: 'red',
-            'class': 'Chart-rect--invisible'
-          })
-          .on('click', function() {
-            chart.emitter.emit('zoom', {
-              type: 'month',
-              domain: d3.select(this).datum().format('YYYY-MM')
+            'class': 'Chart-month',
+            'transform': function(d, i) {
+                return 'translate(' + xPosition(d, i) + ',' + yPosition(d) + ')';
+              }
+            })
+            .append('rect')
+            .attr({
+              width: boxWidth,
+              height: boxHeight,
+              'class': 'Chart-rect--invisible'
+            })
+            .on('click', function() {
+              chart.emitter.emit('zoom', {
+                type: 'month',
+                domain: location
+              });
             });
-          });
+          for (var i = 0; i < this.size(); ++i) {
+            var month = MonthChartInner.create(this[0][i], {
+              location: location
+            });
+            month.draw(); 
+          }
         }
       }
     });
 
     this.layer('month-text', this.base.append('g').attr('id', 'month-text'), {
-      dataBind: function() {
-        return this.selectAll('text').data(chart.months());
-      },
+      dataBind: monthData('text'),
       insert: function() {
         return this.append('text');
       },
@@ -84,7 +97,7 @@ d3.chart('Year', {
           };
           var monthText = function(d) {
             return d.format('MMMM');
-          }
+          };
           this.attr({
             x: xPosition,
             y: yPosition,
