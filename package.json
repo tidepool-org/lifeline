@@ -2,6 +2,7 @@
   "name": "example-d3-react",
   "version": "0.1.0",
   "dependencies": {
+    "crossfilter": "^1.3.9",
     "d3": "^3.4.11",
     "d3.chart": "git://github.com/misoproject/d3.chart",
     "lodash": "^2.4.1",

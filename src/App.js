@@ -39,11 +39,11 @@ var App = React.createClass({
     this.chart.draw();
 
     var self = this;
-    dataService.fetchYear(zooming.year(this.state.zoom), function(err, data) {
+    dataService.fetchForZoom(this.state.zoom, function(err, dataCube) {
       if (err) {
         throw err;
       }
-      self.chart.draw(data);
+      self.chart.draw(dataCube);
       return cb && cb();
     });
   },
