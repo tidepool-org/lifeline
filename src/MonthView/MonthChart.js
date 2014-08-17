@@ -16,10 +16,10 @@ d3.chart('Month', {
 
     this.layer('month-container', this.base.append('g').attr('id', 'month-container'), {
       dataBind: function() {
-        return this.selectAll('g').data([chart.days()]);
+        return this.selectAll('g').data([chart.month()]);
       },
       insert: function() {
-        this.append('g');
+        return this.append('g');
       },
       events: {
         enter: function() {
@@ -27,20 +27,21 @@ d3.chart('Month', {
             'class': 'Chart-month',
             'transform': 'translate(' + margin + ',' + margin + ')'
           });
-          this.month = MonthChartInner.create(this, {
-            location: chart.location()
+          var month = MonthChartInner.create(this.node(), {
+            location: chart.month()
           });
-          this.month.draw();
+          month.draw();
         }
       }
     });
   },
   location: function(location) {
-    if (!arguments.length) { return location; }
+    this.month = function() { return location; };
     return this;
   },
   remove: function() {
     this.base.remove();
+    return this;
   }
 });
 

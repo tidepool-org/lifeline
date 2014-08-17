@@ -43,7 +43,6 @@ d3.chart('Year', {
               return margin;
             }
           };
-          // var location = this.datum().format('YYYY-MM');
           this.attr({
             'class': 'Chart-month',
             'transform': function(d, i) {
@@ -56,15 +55,17 @@ d3.chart('Year', {
               height: boxHeight,
               'class': 'Chart-rect--invisible'
             })
-            .on('click', function() {
+            .on('click', function(d) {
               chart.emitter.emit('zoom', {
-                type: 'month',
-                domain: location
+                level: 'month',
+                location: d.format('YYYY-MM')
               });
             });
+          // SHAME: this is a hack!
+          // there maybe should kinda be a better way to do nested charts in d3.chart
           for (var i = 0; i < this.size(); ++i) {
             var month = MonthChartInner.create(this[0][i], {
-              location: location
+              location: d3.select(this[0][i]).datum().format('YYYY-MM')
             });
             month.draw(); 
           }
@@ -118,6 +119,7 @@ d3.chart('Year', {
   },
   remove: function() {
     this.base.remove();
+    return this;
   }
 });
 

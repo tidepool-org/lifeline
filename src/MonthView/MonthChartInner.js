@@ -48,7 +48,6 @@ module.exports = {
     chart = d3.select(el)
       .chart('MonthInner')
       .location(options.location);
-
     return chart;
   }
 };
