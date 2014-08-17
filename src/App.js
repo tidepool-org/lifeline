@@ -1,8 +1,10 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var moment = require('moment');
 
 var zooming = require('./zooming');
+var dataService = window.dataService = require('./dataService');
 
 require('./App.less');
 
@@ -25,7 +27,7 @@ var App = React.createClass({
     this.createChart();
   },
 
-  createChart: function() {
+  createChart: function(cb) {
     var el = this.refs.chart.getDOMNode();
     var Chart = zooming.getChart(this.state.zoom);
     this.chart = Chart.create(el, {
@@ -35,6 +37,15 @@ var App = React.createClass({
     });
     this.chart.emitter.on('zoom', this.handleZoom);
     this.chart.draw();
+
+    var self = this;
+    dataService.fetchYear(zooming.year(this.state.zoom), function(err, data) {
+      if (err) {
+        throw err;
+      }
+      self.chart.draw(data);
+      return cb && cb();
+    });
   },
 
   removeChart: function() {

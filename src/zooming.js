@@ -18,6 +18,9 @@ ns._mapping = {
         level: 'month',
         location: location + '-01'
       };
+    },
+    yearOf: function(location) {
+      return location;
     }
   },
   'month': {
@@ -35,7 +38,10 @@ ns._mapping = {
         location: location.slice(0, 4)
       };
     },
-    zoomInFrom: null
+    zoomInFrom: null,
+    yearOf: function(location) {
+      return moment(location, 'YYYY-MM').format('YYYY');
+    }
   },
 };
 
@@ -85,6 +91,10 @@ ns.nextPage = function(zoom) {
 
 ns.previousPage = function(zoom) {
   return this._findLevel(zoom.level).pageFrom(zoom.location, -1);
+};
+
+ns.year = function(zoom) {
+  return this._findLevel(zoom.level).yearOf(zoom.location);
 };
 
 module.exports = ns;
