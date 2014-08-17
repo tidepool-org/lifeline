@@ -14,4 +14,8 @@ ns.median = function(values) {
   }
 };
 
+ns.dayFromIso = function(iso) {
+  return iso.slice(0, 10);
+};
+
 module.exports = ns;

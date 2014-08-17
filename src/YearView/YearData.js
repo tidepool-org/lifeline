@@ -7,7 +7,7 @@ module.exports = function(cube) {
   var allCbg = _.filter(allData, {'type': 'cbg'});
 
   var mapped = _.groupBy(allCbg, function(d) {
-    return d.deviceTime.slice(0, 10);
+    return utils.dayFromIso(d.deviceTime);
   });
 
   var reduced = _.map(mapped, function(data, key) {
