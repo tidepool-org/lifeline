@@ -48,8 +48,8 @@ d3.chart('Year', {
           })
           .on('click', function() {
             chart.emitter.emit('zoom', {
-              type: 'month',
-              domain: d3.select(this).datum().format('YYYY-MM')
+              level: 'month',
+              location: d3.select(this).datum().format('YYYY-MM')
             });
           });
         }
@@ -63,6 +63,9 @@ d3.chart('Year', {
     }
     this.months = function() { return _months; };
     return this;
+  },
+  remove: function() {
+    this.base.remove();
   }
 });
 

@@ -8,11 +8,9 @@ var MonthTitle = React.createClass({
     var title = moment(this.props.zoom.location, 'YYYY-MM').format('MMMM YYYY');
 
     return (
-    /* jshint ignore:start */
       <div className="MonthTitle">
         {title}
       </div>
-    /* jshint ignore:end */
     );
   }
 });

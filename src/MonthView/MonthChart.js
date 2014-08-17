@@ -2,7 +2,6 @@ require('../Chart.less');
 var EventEmitter = require('events').EventEmitter;
 
 var d3 = window.d3;
-var moment = require('moment');
 
 d3.chart('Month', {
   initialize: function() {
@@ -12,6 +11,9 @@ d3.chart('Month', {
   },
   location: function(month) {
     return this;
+  },
+  remove: function() {
+    this.base.remove();
   }
 });
 
