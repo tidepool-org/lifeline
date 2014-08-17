@@ -4,7 +4,7 @@ require('../CommonView/MonthChartInner');
 
 d3.chart('MonthInner').extend('MonthBarTIR', {
   initialize: function() {
-    this.layer('MonthInner').on('enter', function() {
+    this.layer('MonthInner-data').on('enter', function() {
 
     });
   }

@@ -35,6 +35,7 @@ var App = React.createClass({
       location: this.state.zoom.location
     });
     this.chart.emitter.on('zoom', this.handleZoom);
+    this.chart.draw();
 
     var self = this;
     dataService.fetchForZoom(this.state.zoom, function(err, dataCube) {
