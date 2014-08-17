@@ -84,7 +84,7 @@ d3.chart('Year', {
           };
           var monthText = function(d) {
             return d.format('MMMM');
-          }
+          };
           this.attr({
             x: xPosition,
             y: yPosition,

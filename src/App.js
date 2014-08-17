@@ -108,7 +108,6 @@ var App = React.createClass({
   },
 
   handleZoom: function(zoom) {
-    console.log('zoom', zoom);
     this.setState({zoom: zoom});
   }
 });
