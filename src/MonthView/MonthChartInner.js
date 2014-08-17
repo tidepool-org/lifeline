@@ -49,7 +49,8 @@ d3.chart('MonthInner', {
             // SHAME: vertical margin doesn't include space for month label
             // so must bump it down equivalently
             // probably should refactor this later...
-            y: yPosition()
+            y: yPosition(),
+            'class': 'Chart-rect--day'
           });
         }
       }
