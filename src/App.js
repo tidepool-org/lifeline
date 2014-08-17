@@ -5,8 +5,6 @@ var React = require('react');
 var zooming = require('./zooming');
 var dataService = window.dataService = require('./dataService');
 
-var test = require('./YearView/YearData');
-
 require('./App.less');
 
 var App = React.createClass({
