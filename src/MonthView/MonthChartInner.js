@@ -21,7 +21,7 @@ d3.chart('MonthInner', {
         enter: function() {
           var margins = chart.ms;
           boxWidth = (chart.w - margins.horizontal*2 - margins.inner*6)/7;
-          boxHeight = (chart.h - margins.vertical*2 - margins.inner*5)/6;
+          boxHeight = (chart.h - margins.vertical*4 - margins.inner*5)/6;
           var xPosition = function(d) {
             var dayOfWeek = d.day();
             var i = dayOfWeek - 1;
