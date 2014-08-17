@@ -4,7 +4,8 @@ var EventEmitter = require('events').EventEmitter;
 var d3 = window.d3;
 var moment = require('moment');
 
-var MonthChartInner = require('../CommonView/MonthChartInner');
+var YearData = require('./YearData');
+var YearMedianHeat = require('./YearMedianHeat');
 
 d3.chart('Year', {
   initialize: function() {
@@ -64,7 +65,7 @@ d3.chart('Year', {
           // SHAME: this is a hack!
           // there maybe should kinda be a better way to do nested charts in d3.chart
           for (var i = 0; i < this.size(); ++i) {
-            var month = MonthChartInner.create(this[0][i], {
+            var month = YearMedianHeat.create(this[0][i], {
               location: d3.select(this[0][i]).datum().format('YYYY-MM'),
               width: boxWidth,
               height: boxHeight,
@@ -74,7 +75,7 @@ d3.chart('Year', {
                 inner: 2
               }
             });
-            month.draw(); 
+            month.draw(chart.dData); 
           }
         }
       }
@@ -123,6 +124,10 @@ d3.chart('Year', {
     }
     this.months = function() { return _months; };
     return this;
+  },
+  transform: function(cube) {
+    this.dData = YearData(cube);
+    return this.dData;
   },
   remove: function() {
     this.base.remove();

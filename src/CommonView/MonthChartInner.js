@@ -9,11 +9,10 @@ d3.chart('MonthInner', {
     var chart = this;
     var boxWidth, boxHeight;
 
-    var dayData = function(el) {
-      return function() { return this.selectAll(el).data(chart.days()); };
-    };
     this.layer('MonthInner', this.base.insert('g', '.Chart-rect--invisible').attr('class', 'MonthInner'), {
-      dataBind: dayData('rect'),
+      dataBind: function(data) {
+        return this.selectAll('rect').data(data);
+      },
       insert: function() {
         return this.append('rect');
       },
@@ -23,7 +22,7 @@ d3.chart('MonthInner', {
           boxWidth = (chart.w - margins.horizontal*2 - margins.inner*6)/7;
           boxHeight = (chart.h - margins.vertical*4 - margins.inner*5)/6;
           var xPosition = function(d) {
-            var dayOfWeek = d.day();
+            var dayOfWeek = moment(d.key, 'YYYY-MM-DD').day();
             var i = dayOfWeek - 1;
             if (dayOfWeek <= 6 && dayOfWeek !== 0) {
               return margins.horizontal + i * margins.inner + i * boxWidth;
@@ -37,8 +36,8 @@ d3.chart('MonthInner', {
             var days = chart.days();
             var firstDayOfWeek = days[0].day();
             var offset = (firstDayOfWeek !== 0) ? firstDayOfWeek - 2 : 5;
-            return function(d, i) {
-              var row = Math.floor((d.date() + offset) / 7);
+            return function(d) {
+              var row = Math.floor((moment(d.key, 'YYYY-MM-DD').date() + offset) / 7);
               return margins.vertical*3 + boxHeight * row + row * margins.inner;
             };
           };
@@ -65,36 +64,25 @@ d3.chart('MonthInner', {
         _days.push(day);
       }
     }
+    this.l = location;
     this.days = function() { return _days; };
     return this;
   },
   width: function(w) {
     this.w = w;
-    if (!arguments.length) { return this.width; }
     return this;
   },
   height: function(h) {
     this.h = h;
-    if (!arguments.length) { return this.height; }
     return this;
   },
   margins: function(margins) {
     this.ms = margins;
-    if (!arguments.length) { return this.margins; }
     return this;
+  },
+  transform: function(data) {
+    return _.filter(data, function(d) {
+      return d.key.indexOf(this.l) !== -1;
+    }, this);
   }
 });
-
-var chart;
-
-module.exports = {
-  create: function(el, options) {
-    chart = d3.select(el)
-      .chart('MonthInner')
-      .location(options.location)
-      .width(options.width)
-      .height(options.height)
-      .margins(options.margins);
-    return chart;
-  }
-};
