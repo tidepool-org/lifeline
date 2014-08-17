@@ -33,7 +33,7 @@ ns.fetchForZoom = function(zoom, cb) {
       console.error('Error fetching and parsing data for year ' + year);
       throw err;
     }
-    data = self._processRawData()
+    data = self._processRawData();
     var cube = self._createDataCube(data);
     self._cache[year] = cube;
     return cb && cb(null, cube);

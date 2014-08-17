@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var moment = require('moment');
 
 var zooming = require('./zooming');
 var dataService = window.dataService = require('./dataService');
