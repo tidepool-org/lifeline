@@ -44,6 +44,8 @@ var App = React.createClass({
 
   render: function() {
     var Title = zooming.getTitle(this.state.zoom);
+    var previousPageZoom = zooming.previousPage(this.state.zoom);
+    var nextPageZoom = zooming.nextPage(this.state.zoom);
 
     return (
       <div className="App">
@@ -53,11 +55,13 @@ var App = React.createClass({
           </div>
           {this.renderZoomOut()}
           <div className="App-columns">
-            <a href="#" className="App-zoom App-zoom--vertical">
+            <a href="#" className="App-zoom App-zoom--vertical"
+              onClick={this.handleZoom.bind(this, previousPageZoom)}>
               <div className="App-zoomIcon">&#9664;</div>
             </a>
             <div className="App-chart" ref="chart"></div>
-            <a href="#" className="App-zoom App-zoom--vertical">
+            <a href="#" className="App-zoom App-zoom--vertical"
+              onClick={this.handleZoom.bind(this, nextPageZoom)}>
               <div className="App-zoomIcon">&#9654;</div>
             </a>
           </div>
