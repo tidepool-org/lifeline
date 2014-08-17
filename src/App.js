@@ -53,9 +53,18 @@ var App = React.createClass({
   },
 
   render: function() {
+    var self = this;
     var Title = zooming.getTitle(this.state.zoom);
     var previousPageZoom = zooming.previousPage(this.state.zoom);
+    var handleClickPreviousPage = function(e) {
+      e.preventDefault();
+      return self.handleZoom(previousPageZoom);
+    };
     var nextPageZoom = zooming.nextPage(this.state.zoom);
+    var handleClickNextPage = function(e) {
+      e.preventDefault();
+      return self.handleZoom(nextPageZoom);
+    };
 
     return (
       <div className="App">
@@ -66,12 +75,12 @@ var App = React.createClass({
           {this.renderZoomOut()}
           <div className="App-columns">
             <a href="#" className="App-zoom App-zoom--vertical"
-              onClick={this.handleZoom.bind(this, previousPageZoom)}>
+              onClick={handleClickPreviousPage}>
               <div className="App-zoomIcon">&#9664;</div>
             </a>
             <div className="App-chart" ref="chart"></div>
             <a href="#" className="App-zoom App-zoom--vertical"
-              onClick={this.handleZoom.bind(this, nextPageZoom)}>
+              onClick={handleClickNextPage}>
               <div className="App-zoomIcon">&#9654;</div>
             </a>
           </div>
@@ -91,8 +100,11 @@ var App = React.createClass({
     }
 
     var newZoom = zooming.zoomOut(this.state.zoom);
-    var handleClick = this.handleZoom.bind(this, newZoom);
-
+    var self = this;
+    var handleClick = function(e) {
+      e.preventDefault();
+      self.handleZoom(newZoom);
+    };
     return (
       <a href="#" className="App-zoom App-zoom--horizontal"
         onClick={handleClick}>
@@ -111,7 +123,10 @@ var App = React.createClass({
     }
 
     var newZoom = zooming.zoomIn(this.state.zoom);
-    var handleClick = this.handleZoom.bind(this, newZoom);
+    var handleClick = function(e) {
+      e.preventDefault();
+      self.handleZoom(newZoom);
+    };
 
     return (
       <a href="#" className="App-zoom App-zoom--horizontal"

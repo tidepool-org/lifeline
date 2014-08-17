@@ -21,8 +21,15 @@ ns._mapping = {
     },
     yearOf: function(location) {
       return location;
+    },
+    rangeFor: function(location) {
+      return [
+        moment(location, 'YYYY').format('YYYY-MM-DDTHH:mm:ss'),
+        moment(location, 'YYYY').add(1, 'years').format('YYYY-MM-DDTHH:mm:ss')
+      ];
     }
   },
+
   'month': {
     chart: require('./MonthView/MonthChart'),
     title: require('./MonthView/MonthTitle'),
@@ -41,6 +48,12 @@ ns._mapping = {
     zoomInFrom: null,
     yearOf: function(location) {
       return moment(location, 'YYYY-MM').format('YYYY');
+    },
+    rangeFor: function(location) {
+      return [
+        moment(location, 'YYYY-MM').format('YYYY-MM-DDTHH:mm:ss'),
+        moment(location, 'YYYY-MM').add(1, 'months').format('YYYY-MM-DDTHH:mm:ss')
+      ];
     }
   },
 };
@@ -95,6 +108,10 @@ ns.previousPage = function(zoom) {
 
 ns.year = function(zoom) {
   return this._findLevel(zoom.level).yearOf(zoom.location);
+};
+
+ns.range = function(zoom) {
+  return this._findLevel(zoom.level).rangeFor(zoom.location);
 };
 
 module.exports = ns;

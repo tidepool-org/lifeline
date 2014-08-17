@@ -17,8 +17,20 @@ ns._cache = {};
 ns.fetchForZoom = function(zoom, cb) {
   var year = zooming.year(zoom);
 
+  this._fetchForYear(year, function(err, cube) {
+    if (err) {
+      throw err;
+    }
+    var range = zooming.range(zoom);
+    cube.filterBy('deviceTime', range);
+    return cb && cb(null, cube);
+  });
+};
+
+ns._fetchForYear = function(year, cb) {
   var cached = this._cache[year];
   if (cached) {
+    cached.clearFilters();
     return cb(null, cached);
   }
 
@@ -33,7 +45,7 @@ ns.fetchForZoom = function(zoom, cb) {
       console.error('Error fetching and parsing data for year ' + year);
       throw err;
     }
-    data = self._processRawData();
+    data = self._processRawData(data);
     var cube = self._createDataCube(data);
     self._cache[year] = cube;
     return cb && cb(null, cube);
