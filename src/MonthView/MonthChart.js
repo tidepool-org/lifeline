@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 
 var d3 = window.d3;
 
-var MonthChartInner = require('../MonthView/MonthChartInner');
+var MonthChartInner = require('../CommonView/MonthChartInner');
 
 d3.chart('Month', {
   initialize: function() {
