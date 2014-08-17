@@ -6,6 +6,8 @@ var moment = require('moment');
 
 d3.chart('MonthInner', {
   initialize: function() {
+    var chart = this;
+    
     var dayData = function(el) {
       return function() { return this.selectAll(el).data(chart.days()); };
     };
@@ -24,7 +26,7 @@ d3.chart('MonthInner', {
           });
         }
       }
-    })
+    });
   },
   location: function(location) {
     var _days = [];
@@ -34,7 +36,6 @@ d3.chart('MonthInner', {
         _days.push(day);
       }
     }
-    console.log(_days);
     this.days = function() { return _days; };
     return this;
   }
