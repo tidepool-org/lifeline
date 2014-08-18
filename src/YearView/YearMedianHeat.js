@@ -8,8 +8,8 @@ d3.chart('MonthInner').extend('YearMedianHeat', {
 
       var heat = d3.scale.linear()
         .domain(d3.extent(this.data(), function(d) { return d.value; }))
-        .range(['white', 'green'])
-        .interpolate(d3.interpolateHcl);
+        .range(['white', '#854cff'])
+        .interpolate(d3.interpolateLab);
 
       return this.attr({
         fill: function(d) { return heat(d.value); }
