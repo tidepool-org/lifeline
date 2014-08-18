@@ -57,11 +57,13 @@ a {
   flex-grow: 1;
 }
 
+@App-titleHeight: 50px;
+
 .App-title {
   text-align: center;
   font-size: 20px;
-  height: 30px;
-  line-height: 30px;
+  height: @App-titleHeight;
+  line-height: @App-titleHeight;
 }
 
 .App-chart {
@@ -108,4 +110,31 @@ a {
   line-height: @App-zoomButtonSize;
   text-align: center;
   margin: auto;
+}
+
+@App-tabHeight: 30px;
+@App-tabBorderSize: 3px;
+
+.App-tabs {
+  display: flex;
+  height: @App-tabHeight;
+}
+
+.App-tab {
+  display: block;
+  flex-grow: 1;
+  text-align: center;
+  line-height: @App-tabHeight - @App-tabBorderSize;
+  border-bottom: @App-tabBorderSize solid white;
+
+  color: #555;
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.is-active {
+    color: cornflowerblue;
+    border-color: cornflowerblue;
+  }
 }

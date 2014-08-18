@@ -6,6 +6,7 @@ ns._mapping = {
   'year': {
     chart: require('./YearView/YearChart'),
     title: require('./YearView/YearTitle'),
+    tabs: require('./YearView/YearTabs'),
     pageFrom: function(location, delta) {
       return {
         level: 'year',
@@ -33,6 +34,7 @@ ns._mapping = {
   'month': {
     chart: require('./MonthView/MonthChart'),
     title: require('./MonthView/MonthTitle'),
+    tabs: require('./MonthView/MonthTabs'),
     pageFrom: function(location, delta) {
       return {
         level: 'month',
@@ -72,6 +74,10 @@ ns.getChart = function(zoom) {
 
 ns.getTitle = function(zoom) {
   return this._findLevel(zoom.level).title;
+};
+
+ns.getTabs = function(zoom) {
+  return this._findLevel(zoom.level).tabs;
 };
 
 ns.canZoomOut = function(zoom) {

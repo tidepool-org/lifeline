@@ -88,6 +88,7 @@ var App = React.createClass({
               <div className="App-title">
                 <Title zoom={this.state.zoom} />
               </div>
+              {this.renderTabs()}
               <div className="App-chart" ref="chart"></div>
             </div>
             <a href="#" className="App-zoom App-zoom--vertical"
@@ -106,6 +107,27 @@ var App = React.createClass({
       return null;
     }
     return <div className="App-spinnerLayer"><Spinner /></div>;
+  },
+
+  renderTabs: function() {
+    var tabs = zooming.getTabs(this.state.zoom);
+
+    var tabNodes = _.map(tabs, function(tab, index) {
+      var classes = 'App-tab';
+
+      // Fake it till you make it
+      if (index === 0) {
+        classes += ' is-active';
+      }
+
+      return <a key={tab.code} href="#" className={classes}>{tab.label}</a>;
+    });
+
+    return (
+      <div className="App-tabs">
+        {tabNodes}
+      </div>
+    );
   },
 
   renderZoomOut: function() {
