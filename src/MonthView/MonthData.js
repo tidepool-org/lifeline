@@ -41,11 +41,20 @@ module.exports = function(cube, options) {
     var breakdown = _.countBy(data, function(d, key) {
       return getCategory(d.value, options);
     });
-    var value = {
-      low: (breakdown.low || 0)/total,
-      target: (breakdown.target || 0)/total,
-      high: (breakdown.high || 0)/total
-    };
+    var value = [
+      {
+        category: 'low',
+        value: (breakdown.low || 0)/total
+      },
+      {
+        category: 'target',
+        value: (breakdown.target || 0)/total
+      },
+      {
+        category: 'high',
+        value: (breakdown.high || 0)/total
+      }
+    ];
     return {
       key: key,
       value: value
