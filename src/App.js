@@ -1,4 +1,5 @@
 /** @jsx React.DOM */
+var d3 = window.d3;
 
 var React = require('react');
 var _ = require('lodash');
@@ -42,6 +43,13 @@ var App = React.createClass({
     });
     this.chart.emitter.on('zoom', this.handleZoom);
     this.chart.draw();
+    d3.select(window).on('resize', function() {
+      d3.select(el).select('svg')
+        .attr({
+          width: el.offsetWidth,
+          height: el.offsetHeight
+        });
+    });
 
     var self = this;
     this.setState({loading: true});
