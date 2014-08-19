@@ -4,6 +4,7 @@ var EventEmitter = require('events').EventEmitter;
 var d3 = window.d3;
 
 var MonthData = require('./MonthData');
+var MonthChartInner = require('../CommonView/MonthChartInner');
 var MonthBarTIR = require('./MonthBarTIR');
 
 d3.chart('Month', {
@@ -25,10 +26,10 @@ d3.chart('Month', {
       events: {
         enter: function() {
           this.attr({
-            'class': 'Chart-month',
+            'class': 'Chart-month--base',
             'transform': 'translate(' + margin + ',' + margin + ')'
           });
-          var month = MonthBarTIR.create(this.node(), {
+          var month = MonthChartInner.create(this.node(), {
             location: chart.month(),
             width: chart.w,
             height: chart.h,
@@ -53,7 +54,7 @@ d3.chart('Month', {
       events: {
         enter: function() {
           this.attr({
-            'class': 'Chart-month',
+            'class': 'Chart-month--data',
             'transform': 'translate(' + margin + ',' + margin + ')'
           });
           var month = MonthBarTIR.create(this.node(), {

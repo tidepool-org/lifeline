@@ -20,5 +20,7 @@ module.exports = function(cube) {
     };
   });
 
-  return reduced;
+  return _.groupBy(reduced, function(d) {
+    return d.key.slice(0,-3);
+  });
 };

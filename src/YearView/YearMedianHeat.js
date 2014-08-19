@@ -1,8 +1,8 @@
 var d3 = window.d3;
 
-require('../CommonView/MonthChartInner');
+require('../CommonView/MonthChartInnerActual');
 
-d3.chart('MonthInner').extend('YearMedianHeat', {
+d3.chart('MonthInnerActual').extend('YearMedianHeat', {
   initialize: function() {
     this.layer('MonthInner-data').on('enter', function() {
 

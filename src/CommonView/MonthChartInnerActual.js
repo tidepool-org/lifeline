@@ -3,14 +3,14 @@ require('../Chart.less');
 var d3 = window.d3;
 var moment = require('moment');
 
-d3.chart('MonthInner', {
+d3.chart('MonthInnerActual', {
   initialize: function() {
     var chart = this;
     var boxWidth, boxHeight, margins;
 
-    this.layer('MonthInner-base', this.base.insert('g', '.Chart-rect--invisible').attr('class', 'MonthInner-base'), {
-      dataBind: function() {
-        return this.selectAll('rect').data(chart.days());
+    this.layer('MonthInner-data', this.base.append('g').attr('class', 'MonthInner-data'), {
+      dataBind: function(data) {
+        return this.selectAll('rect').data(data);
       },
       insert: function() {
         return this.append('rect');
@@ -22,7 +22,7 @@ d3.chart('MonthInner', {
           boxHeight = (chart.h - margins.vertical*4 - margins.inner*5)/6;
 
           var xPosition = function(d) {
-            var dayOfWeek = d.day();
+            var dayOfWeek = moment(d.key, 'YYYY-MM-DD').day();
             var i = dayOfWeek - 1;
             if (dayOfWeek <= 6 && dayOfWeek !== 0) {
               return margins.horizontal + i * margins.inner + i * boxWidth;
@@ -40,7 +40,7 @@ d3.chart('MonthInner', {
             // so must bump it down equivalently
             // probably should refactor this later...
             return function(d) {
-              var row = Math.floor((d.date() + offset) / 7);
+              var row = Math.floor((moment(d.key, 'YYYY-MM-DD').date() + offset) / 7);
               return margins.vertical*3 + boxHeight * row + row * margins.inner;
             };
           };
@@ -49,7 +49,7 @@ d3.chart('MonthInner', {
             height: boxHeight,
             x: xPosition,
             y: yPosition(),
-            'class': 'Chart-rect--day'
+            'class': 'Chart-rect--data'
           });
         }
       }
@@ -81,17 +81,3 @@ d3.chart('MonthInner', {
     return this;
   }
 });
-
-var chart;
-
-module.exports = {
-  create: function(el, options) {
-    chart = d3.select(el)
-      .chart('MonthInner')
-      .location(options.location)
-      .width(options.width)
-      .height(options.height)
-      .margins(options.margins);
-    return chart;
-  }
-};

@@ -1,9 +1,9 @@
 var _ = require('lodash');
 var d3 = window.d3;
 
-require('../CommonView/MonthChartInner');
+require('../CommonView/MonthChartInnerActual');
 
-d3.chart('MonthInner').extend('MonthBarTIR', {
+d3.chart('MonthInnerActual').extend('MonthBarTIR', {
   initialize: function() {
     this.layer('MonthInner-data').on('enter', function() {
       this.attr('class', 'Chart-rect--invisible');

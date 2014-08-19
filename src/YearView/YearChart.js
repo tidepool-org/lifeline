@@ -45,7 +45,7 @@ d3.chart('Year', {
         return this.selectAll('g').data(chart.months());
       },
       insert: function() {
-        return this.append('g').attr('class', 'MonthInner');
+        return this.append('g').attr('class', 'MonthInner--base');
       },
       events: {
         enter: function() {
@@ -76,7 +76,7 @@ d3.chart('Year', {
         return this.selectAll('g').data(chart.actualMonths());
       },
       insert: function() {
-        return this.append('g').attr('class', 'MonthInner');
+        return this.append('g').attr('class', 'MonthInner--data');
       },
       events: {
         enter: function() {
@@ -86,6 +86,7 @@ d3.chart('Year', {
               }
           })
           .each(function(d) {
+            var loc = d.format('YYYY-MM');
             var month = YearMedianHeat.create(this, {
               location: d.format('YYYY-MM'),
               width: boxWidth,
@@ -96,7 +97,7 @@ d3.chart('Year', {
                 inner: 2
               }
             });
-            month.draw(chart.dData);
+            month.draw(chart.dData[loc]);
           });
         }
       }
@@ -176,10 +177,8 @@ d3.chart('Year', {
       this.dData = [];
     }
     else {
-      this.dData = YearData(cube); 
-      _actualMonths = _.map(_.uniq(_.map(_.pluck(this.dData, 'key'), function(d) {
-        return d.slice(0,-3);
-      })), function(d) { return moment(d, 'YYYY-MM'); });
+      this.dData = YearData(cube);
+      _actualMonths = _.map(Object.keys(this.dData), function(d) { return moment(d, 'YYYY-MM'); });
     }
     this.actualMonths = function() { return _actualMonths; };
     return this.dData;
