@@ -23,20 +23,20 @@ d3.chart('MonthInner').extend('MonthBarTIR', {
         });
       };
 
-      for (var i = 0; i < this.size(); ++i) {
-        var node = d3.select(this[0][i]);
-
-        var stack = _.map(d3.layout.stack()(reshape(node.datum().value)), function(s) {
+      this.each(function(d) {
+        var stack = _.map(d3.layout.stack()(reshape(d.value)), function(s) {
           return s[0];
         });
 
-        parent.append('g')
+        var node = d3.select(this);
+
+        var parentGroup = parent.append('g')
           .attr({
             'class': 'BarTIR',
             transform: 'translate(' + node.attr('x') + ',' + node.attr('y') + ')'
-          })
-          .data(stack)
-          .selectAll('rect')
+          });
+
+        parentGroup.selectAll('rect')
           .data(stack)
           .enter()
           .append('rect')
@@ -49,7 +49,7 @@ d3.chart('MonthInner').extend('MonthBarTIR', {
               return d.x;
             }
           });
-      }
+      });
     });
   }
 });

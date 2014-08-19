@@ -6,6 +6,7 @@ var d3 = window.d3;
 var moment = require('moment');
 
 var YearData = require('./YearData');
+var MonthChartInner = require('../CommonView/MonthChartInner');
 var YearMedianHeat = require('./YearMedianHeat');
 
 d3.chart('Year', {
@@ -52,12 +53,10 @@ d3.chart('Year', {
             'transform': function(d, i) {
                 return 'translate(' + xPosition(d, i) + ',' + yPosition(d) + ')';
               }
-          });
-          // SHAME: this is a hack!
-          // there maybe should kinda be a better way to do nested charts in d3.chart
-          for (var i = 0; i < this.size(); ++i) {
-            var month = YearMedianHeat.create(this[0][i], {
-              location: d3.select(this[0][i]).datum().format('YYYY-MM'),
+          })
+          .each(function(d) {
+            var month = MonthChartInner.create(this, {
+              location: d.format('YYYY-MM'),
               width: boxWidth,
               height: boxHeight,
               margins: {
@@ -66,8 +65,8 @@ d3.chart('Year', {
                 inner: 2
               }
             });
-            month.draw(); 
-          }
+            month.draw();
+          });
         }
       }
     });
@@ -85,12 +84,10 @@ d3.chart('Year', {
             'transform': function(d, i) {
                 return 'translate(' + xPosition(d, i) + ',' + yPosition(d) + ')';
               }
-          });
-          // SHAME: this is a hack!
-          // there maybe should kinda be a better way to do nested charts in d3.chart
-          for (var i = 0; i < this.size(); ++i) {
-            var month = YearMedianHeat.create(this[0][i], {
-              location: d3.select(this[0][i]).datum().format('YYYY-MM'),
+          })
+          .each(function(d) {
+            var month = YearMedianHeat.create(this, {
+              location: d.format('YYYY-MM'),
               width: boxWidth,
               height: boxHeight,
               margins: {
@@ -99,8 +96,8 @@ d3.chart('Year', {
                 inner: 2
               }
             });
-            month.draw(chart.dData); 
-          }
+            month.draw(chart.dData);
+          });
         }
       }
     });
